@@ -8,7 +8,7 @@ _branch=master
 _gitname=$_basename
 pkgname=$_basename-git
 
-pkgver=0.5.35.r0.g1088d94
+pkgver=0.5.43.r0.g40f1205
 
 pkgrel=1
 pkgdesc="Telepathy <> QtContacts bridge for contacts"
@@ -16,11 +16,11 @@ arch=('x86_64' 'aarch64')
 url="https://$_host/$_project/$_gitname#branch=$_branch"
 license=('BSD-3-Clause')
 depends=('kcalendarcore' 'qt5-timed-git' 'qmf-qt5')
-makedepends=('git')
+makedepends=('git' 'cmake' 'extra-cmake-modules')
 provides=("${pkgname%-git}")
 conflicts=("${pkgname%-git}")
-source=("${pkgname}::git+${url}" "0001-KcalendarCore_not_provide_pc_files.path")
-sha256sums=('SKIP' 'SKIP')
+source=("${pkgname}::git+${url}")
+sha256sums=('SKIP')
 
 pkgver() {
   cd "${srcdir}/${pkgname}"
@@ -30,19 +30,14 @@ pkgver() {
   ) 2>/dev/null
 }
 
-prepare() {
-  cd "${srcdir}/${pkgname}"
-  patch -p1 --input="${srcdir}/0001-KcalendarCore_not_provide_pc_files.path"
-}
-
 build() {
-  cd "${srcdir}/${pkgname}"
-  qmake
-  make
+    cmake \
+        -B "${pkgname}/build" \
+        -S "${pkgname}" \
+        -DCMAKE_INSTALL_PREFIX:PATH='/usr'
+    make -C "${pkgname}/build" all
 }
 
 package() {
-  cd "${srcdir}/${pkgname}"
-  make INSTALL_ROOT="${pkgdir}" install
-  mv ${pkgdir}/usr/lib/pkgconfig/mkcal-qt5.pc ${pkgdir}/usr/lib/pkgconfig/libmkcal-qt5.pc
+  make -C "${srcdir}/${pkgname}/build" DESTDIR="$pkgdir" install
 }
