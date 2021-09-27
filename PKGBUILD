@@ -1,7 +1,7 @@
 # Maintainer: Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
 
 pkgname=mkcal-git
-pkgver=0.5.43.r0.g40f1205
+pkgver=0.5.48.r0.g2ed09c8
 pkgrel=1
 pkgdesc="Telepathy <> QtContacts bridge for contacts"
 arch=('x86_64' 'aarch64')
