@@ -10,7 +10,7 @@ license=('BSD-3-Clause')
 depends=('kcalendarcore>=6.0' 'timed')
 makedepends=('cmake' 'extra-cmake-modules>=6.0')
 source=("${url}/archive/refs/tags/$pkgver.tar.gz")
-sha256sums=('ea8782a10be1debdc09b01769e5eaa3f0f86c01c1a31aa45e15efa37f912be62')
+sha256sums=('56ab07544453fcfe8374382bd74ee19ce1682f94883f79a883af5f59ebb0a10e')
 
 build() {
     cd ${_gitname}-$pkgver
